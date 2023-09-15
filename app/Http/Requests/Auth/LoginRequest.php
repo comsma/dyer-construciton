@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -42,7 +42,9 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        $this->rehashMd5Password();
+
+        if (!Auth::attempt($this->only('username', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -54,13 +56,32 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * If we find the user with a matching username and md5 hashed password, rehash
+     * their password.
+     */
+    public function rehashMd5Password(): void
+    {
+        $user = User::where([
+            'username' => $this->username,
+            'password' => md5($this->password),
+        ])->first();
+
+        if ($user === null) {
+            return;
+        }
+
+        $user->password = $this->password;
+        $user->save();
+    }
+
+    /**
      * Ensure the login request is not rate limited.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -81,6 +102,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('username')) . '|' . $this->ip());
     }
 }
