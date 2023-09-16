@@ -13,7 +13,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +25,11 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'company' => ['string', 'max:255'],
-            'username' => ['string', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'username' => ['string', 'max:255', Rule::unique(User::class)->ignore($this->route('userId'))],
+            'hasViewDocuments' => ['boolean'],
+            'hasModifyDocuments' => ['boolean'],
+            'hasModifyGallery' => ['boolean'],
+            'hasAdmin' => ['boolean']
             //
         ];
     }

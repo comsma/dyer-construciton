@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class CreateUserRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,6 +25,13 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'company' => ['string', 'max:255'],
+            'username' => ['string', 'max:255', Rule::unique(User::class)],
+            'password' => ['string', Password::defaults(), 'confirmed'],
+            'has_view_documents' => ['boolean'],
+            'has_modify_documents' => ['boolean'],
+            'has_modify_gallery' => ['boolean'],
+            'has_admin' => ['boolean']
             //
         ];
     }

@@ -18,6 +18,10 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'username' => $this->username,
             'company' => $this->company,
+            'hasViewDocuments' => $this->has_view_documents,
+            'hasModifyDocuments' => $this->has_modify_documents,
+            'hasModifyGallery' => $this->has_modify_gallery,
+            'hasAdmin' => $this->has_admin,
         ];
     }
 }

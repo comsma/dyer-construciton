@@ -15,6 +15,10 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * @var \Illuminate\Support\HigherOrderCollectionProxy|mixed
+     */
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -23,6 +27,7 @@ class User extends Authenticatable
         'company',
         'username',
         'password',
+        'has_view_documents'
     ];
 
     /**

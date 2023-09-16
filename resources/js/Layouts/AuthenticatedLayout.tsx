@@ -23,7 +23,10 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('jobs.list')} active={route().current('jobs.list')}>
-                                    Job Dashboard
+                                    Jobs
+                                </NavLink>
+                                <NavLink href={route('admin.users')} active={route().current('admin.users')}>
+                                    Admin
                                 </NavLink>
                             </div>
                         </div>

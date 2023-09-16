@@ -6,13 +6,15 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 import {JobDocument} from "@/types/jobs";
 import DangerButton from "@/Components/DangerButton";
+import {Simulate} from "react-dom/test-utils";
+import reset = Simulate.reset;
 
 type Props = {
     documents: [JobDocument],
     id: string
 }
 export default function DocumentView({documents, id}: Props ){
-    const { data, setData, post, progress }: InertiaFormProps<{ title: string, document: File}> = useForm({
+    const { data, setData, post, progress, reset }: InertiaFormProps<{ title: string, document: File}> = useForm({
         title: "",
         document: null,
     })
@@ -23,11 +25,9 @@ export default function DocumentView({documents, id}: Props ){
 
     function submit(e: React.FormEvent) {
         e.preventDefault()
-        post(`/jobs/${id}/documents`)
-        setData({
-            title: "",
-            document:null
-        })
+        post(`/jobs/${id}/documents`, {
+            onSuccess: () => reset()
+        });
     }
 
     const [isUploadDocumentOpen, setIsDocumentOpen] = useState(false);

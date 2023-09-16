@@ -33,16 +33,22 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'create'])->name('jobs.create');
 
     Route::get('/jobs/{id}', [\App\Http\Controllers\JobController::class, 'view']);
+    Route::patch('jobs/{id}')->name('jobs.edit');
     Route::delete('/jobs/{id}', [\App\Http\Controllers\JobController::class, 'destroy'])->name('jobs.delete');
 
     Route::post('/jobs/{job_id}/documents', [\App\Http\Controllers\DocumentsController::class, 'create']);
-    Route::get('/documents', [\App\Http\Controllers\DocumentsController::class, 'listDocuments']);
 
     Route::get('/jobs/{job_id}/documents/{document_id}', [\App\Http\Controllers\DocumentsController::class, 'view']);
     Route::delete('/jobs/{job_id}/documents/{document_id}', [\App\Http\Controllers\DocumentsController::class, 'destroy']);
 
-    Route::get('/admin/user/{id}', [\App\Http\Controllers\AdminController::class, 'editUser'])->name('admin.user.edit');
-    Route::patch('/admin/user/{id}', [\App\Http\Controllers\AdminController::class, 'updateUser'])->name('admin.user.update');
+    Route::get('/admin/users', [\App\Http\Controllers\AdminController::class, 'getUsers'])->name('admin.users');
+
+    Route::get('/admin/user/{userId}', [\App\Http\Controllers\AdminController::class, 'editUser'])->name('admin.user.get');
+    Route::patch('/admin/user/{userId}', [\App\Http\Controllers\AdminController::class, 'updateUser'])->name('admin.user.update');
+    Route::delete('/admin/user/{userId}', [\App\Http\Controllers\AdminController::class, 'destroyUser'])->name('admin.user.destroy');
+    Route::post('/admin/user', [\App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.user.create');
+
+    Route::post('/admin/user/{userId}/password', [\App\Http\Controllers\AdminController::class, 'updateUserPassword'])->name('admin.user.password.update');
 
 
 });

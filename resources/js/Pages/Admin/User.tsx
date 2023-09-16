@@ -2,6 +2,8 @@ import {UserType} from "@/types/user";
 import {Head, usePage} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {PageProps} from "@/types";
+import UpdateUserPasswordForm from "@/Pages/Admin/Partials/UpdateUserPasswordForm";
+import {UpdateUserDetailsForm} from "@/Pages/Admin/Partials/UpdateUserDetailsForm";
 
 
 type props = {
@@ -23,7 +25,9 @@ return (
                     <div className="px-4 sm:px-6 lg:px-8">
                         <div className="sm:flex sm:items-center">
                             <div className="sm:flex-auto">
-                                <h3 className="text-base font-semibold leading-7 text-gray-900">{users.data[0].username}</h3>
+                                <h3 className="text-base font-semibold leading-7 text-gray-900 uppercase">{users.data[0].username}</h3>
+                                <UpdateUserDetailsForm user={users.data[0]} />
+                                <UpdateUserPasswordForm></UpdateUserPasswordForm>
                             </div>
                         </div>
                     </div>
