@@ -20,7 +20,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 200);
             $table->string('city', 200);
-            $table->string('state', 2);
+            $table->string('state', 50);
             $table->timestamps();
         });
     }

@@ -6,4 +6,10 @@ export type UserType = {
     hasModifyDocuments: boolean,
     hasModifyGallery: boolean,
     hasAdmin: boolean
+    jobs: [UserJob]
+}
+
+export type UserJob = {
+    id: number,
+    name: string,
 }

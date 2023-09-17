@@ -2,8 +2,9 @@ import {UserType} from "@/types/user";
 import {Head, usePage} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {PageProps} from "@/types";
-import UpdateUserPasswordForm from "@/Pages/Admin/Partials/UpdateUserPasswordForm";
-import {UpdateUserDetailsForm} from "@/Pages/Admin/Partials/UpdateUserDetailsForm";
+import UpdateUserPasswordForm from "@/Pages/Admin/User/Partials/UpdateUserPasswordForm";
+import {UpdateUserDetailsForm} from "@/Pages/Admin/User/Partials/UpdateUserDetailsForm";
+import UserJobList from "@/Pages/Admin/User/Partials/UserJobList";
 
 
 type props = {
@@ -12,8 +13,8 @@ type props = {
     }
 }
 export default function User({users, auth}: PageProps<props>) {
-
 return (
+
     <>
         <AuthenticatedLayout
             user={auth.user}
@@ -28,6 +29,7 @@ return (
                                 <h3 className="text-base font-semibold leading-7 text-gray-900 uppercase">{users.data[0].username}</h3>
                                 <UpdateUserDetailsForm user={users.data[0]} />
                                 <UpdateUserPasswordForm></UpdateUserPasswordForm>
+                                <UserJobList jobs={users.data[0].jobs}></UserJobList>
                             </div>
                         </div>
                     </div>

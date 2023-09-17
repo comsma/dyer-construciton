@@ -46,21 +46,21 @@ class DocumentsController extends Controller
     }
 
 
-    public function create(DocumentCreateRequest $request, string $job_id): RedirectResponse
+    public function create(DocumentCreateRequest $request, string $jobId): RedirectResponse
     {
-        error_log($job_id);
-        if (!Storage::directoryExists('job_documents/'.$job_id)) {
-            Storage::createDirectory('job_documents/'.$job_id);
+        error_log($jobId);
+        if (!Storage::directoryExists('job_documents/'.$jobId)) {
+            Storage::createDirectory('job_documents/'.$jobId);
         }
 
-        $path = Storage::putFile('job_documents/'.$job_id, $request->file('document'));
+        $path = Storage::putFile('job_documents/'.$jobId, $request->file('document'));
 
         Document::create([
             'name' => $path,
             'title' => $request->title,
-            'job_id' => $job_id]);
+            'job_id' => $jobId]);
 
-        return redirect('/jobs/'.$job_id);
+        return to_route('jobs.get', ['jobId'=>$jobId]);
 
     }
 
@@ -68,9 +68,9 @@ class DocumentsController extends Controller
      * Remove the document form the job
      * @throws Exception
      */
-    public function destroy(string $job_id, string $document_id): RedirectResponse
+    public function destroy(string $jobId, string $documentId): RedirectResponse
     {
-        $document = Document::where(['job_id' => $job_id, 'id' =>  $document_id])->limit(1)->get();
+        $document = Document::where(['job_id' => $jobId, 'id' =>  $documentId])->limit(1)->get();
 
         $name = $document[0]->name;
 
@@ -81,6 +81,6 @@ class DocumentsController extends Controller
 
         Document::destroy($document[0]->id);
 
-        return redirect('/jobs/'.$job_id);
+        return to_route('jobs.get', ['jobId'=>$jobId]);
     }
 }

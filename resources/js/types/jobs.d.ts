@@ -1,8 +1,11 @@
+import {UserType} from "@/types/user";
+
 export interface Job {
     id: number;
     name: string;
     city: string;
     state: string;
+    users: [UserType];
 }
 
 export interface JobDocument {

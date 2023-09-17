@@ -1,4 +1,4 @@
-import {router, useForm} from "@inertiajs/react";
+import {Link, router, useForm} from "@inertiajs/react";
 import React, {useState} from "react";
 import Modal from "@/Components/Modal";
 import InputLabel from "@/Components/InputLabel";
@@ -19,9 +19,6 @@ export default function DocumentView({documents, id}: Props ){
         document: null,
     })
 
-    function deleteDocument(document_id: string) {
-        router.delete(`/jobs/${id}/documents/${document_id}`)
-    }
 
     function submit(e: React.FormEvent) {
         e.preventDefault()
@@ -109,8 +106,8 @@ export default function DocumentView({documents, id}: Props ){
                 <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <button onClick={() => setIsDocumentOpen(true)} className={'my-5 p-5 flex flex-row justify-center items-center w-full rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600'}>
                         <div className={'ml-4'}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                             </svg>
                         </div>
                         <div className={'ml-4'}>
@@ -135,9 +132,9 @@ export default function DocumentView({documents, id}: Props ){
                                             </a>
                                         </div>
                                         <div className="ml-4 flex-shrink-0">
-                                            <a onClick={() => deleteDocument(document.id)} className="font-medium text-red-600 hover:text-red-500">
+                                            <button onClick={() => router.delete(route('job.documents.delete', {'jobId': id, 'documentId': document.id}))} className="font-medium text-red-600 hover:text-red-500">
                                                 Remove
-                                            </a>
+                                            </button>
                                         </div>
                                     </li>
 

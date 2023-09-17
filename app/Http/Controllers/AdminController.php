@@ -28,7 +28,7 @@ class AdminController extends Controller
     }
 
     function editUser(string $userId): Response {
-        return Inertia::render('Admin/User', [
+        return Inertia::render('Admin/User/User', [
             'users' => UserResource::collection(User::where(['id' => $userId])->get())
         ]);
     }

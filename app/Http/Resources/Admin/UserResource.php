@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\JobResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,6 +23,7 @@ class UserResource extends JsonResource
             'hasModifyDocuments' => $this->has_modify_documents,
             'hasModifyGallery' => $this->has_modify_gallery,
             'hasAdmin' => $this->has_admin,
+            'jobs' => JobResource::collection($this->jobs)
         ];
     }
 }

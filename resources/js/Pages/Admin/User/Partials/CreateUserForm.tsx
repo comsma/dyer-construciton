@@ -1,6 +1,6 @@
 import {useForm} from "@inertiajs/react";
 import {InertiaFormProps} from "@inertiajs/react/types/useForm";
-import {f} from "../../../../../public/build/assets/transition-333b5626";
+import {f} from "../../../../../../public/build/assets/transition-333b5626";
 import React from "react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";

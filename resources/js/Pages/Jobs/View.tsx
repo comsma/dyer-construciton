@@ -33,7 +33,7 @@ export default function View({auth, job}: PageProps<{ job: any }>) {
                                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{job.data[0].state}</dd>
                                 </div>
                                 <DocumentView id={job.data[0].id} documents={job.data[0].documents} />
-                                <UserView />
+                                <UserView users={job.data[0].users} />
                             </dl>
                         </div>
                     </div>

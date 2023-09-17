@@ -22,11 +22,17 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                {user.has_admin?
+                                    <NavLink href={route('admin.users')} active={route().current('admin.users')}>
+                                        Admin
+                                    </NavLink> : null
+                                }
                                 <NavLink href={route('jobs.list')} active={route().current('jobs.list')}>
                                     Jobs
                                 </NavLink>
-                                <NavLink href={route('admin.users')} active={route().current('admin.users')}>
-                                    Admin
+
+                                <NavLink href={route('plan.list')} active={route().current('plan.list')}>
+                                    My Plans
                                 </NavLink>
                             </div>
                         </div>
@@ -40,7 +46,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {user.company}
+                                                {user.username}
 
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
@@ -96,8 +102,8 @@ export default function Authenticated({ user, header, children }: PropsWithChild
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
+                        <ResponsiveNavLink href={route('dashboard')} active={route().current('jobs.list')}>
+                            Jobs
                         </ResponsiveNavLink>
                     </div>
 

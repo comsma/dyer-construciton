@@ -32,14 +32,14 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/jobs', [\App\Http\Controllers\JobController::class, 'listJobs'])->name('jobs.list');
     Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'create'])->name('jobs.create');
 
-    Route::get('/jobs/{id}', [\App\Http\Controllers\JobController::class, 'view']);
+    Route::get('/jobs/{jobId}', [\App\Http\Controllers\JobController::class, 'getJob'])->name('jobs.get');
     Route::patch('jobs/{id}')->name('jobs.edit');
     Route::delete('/jobs/{id}', [\App\Http\Controllers\JobController::class, 'destroy'])->name('jobs.delete');
 
-    Route::post('/jobs/{job_id}/documents', [\App\Http\Controllers\DocumentsController::class, 'create']);
+    Route::post('/jobs/{jobId}/documents', [\App\Http\Controllers\DocumentsController::class, 'create']);
 
     Route::get('/jobs/{job_id}/documents/{document_id}', [\App\Http\Controllers\DocumentsController::class, 'view']);
-    Route::delete('/jobs/{job_id}/documents/{document_id}', [\App\Http\Controllers\DocumentsController::class, 'destroy']);
+    Route::delete('/jobs/{jobId}/documents/{documentId}', [\App\Http\Controllers\DocumentsController::class, 'destroy'])->name('job.documents.delete');
 
     Route::get('/admin/users', [\App\Http\Controllers\AdminController::class, 'getUsers'])->name('admin.users');
 
@@ -49,6 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::post('/admin/user', [\App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.user.create');
 
     Route::post('/admin/user/{userId}/password', [\App\Http\Controllers\AdminController::class, 'updateUserPassword'])->name('admin.user.password.update');
+
+    Route::get('/plans', [\App\Http\Controllers\PlanController::class, 'getPlans'])->name('plan.list');
 
 
 });

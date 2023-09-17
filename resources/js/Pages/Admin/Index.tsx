@@ -2,10 +2,10 @@ import {Head} from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {PageProps} from "@/types";
 import {UserType} from "@/types/user";
-import UserListItem from "@/Pages/Admin/Partials/UserListItem";
+import UserListItem from "@/Pages/Admin/User/Partials/UserListItem";
 import {useState} from "react";
 import Modal from "@/Components/Modal";
-import CreateUserForm from "@/Pages/Admin/Partials/CreateUserForm";
+import CreateUserForm from "@/Pages/Admin/User/Partials/CreateUserForm";
 
 type props = {
     users: {

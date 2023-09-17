@@ -3,11 +3,7 @@ import {router, useForm} from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function CreateJobForm({
-    onSubmit = () => {}
-                                      }: PropsWithChildren<{
-    onSubmit: CallableFunction
-}>) {
+export default function CreateJobForm() {
 
     const [values, setValues] = useState({
         name: "",

@@ -41,10 +41,10 @@ class JobController extends Controller
         return redirect('/jobs');
     }
 
-    public function view(string $id): Response
+    public function getJob(string $jobId): Response
     {
         return Inertia::render('Jobs/View', [
-            'job' => JobWithDocumentResource::collection(Job::where('id', '=', $id)->get())
+            'job' => JobWithDocumentResource::collection(Job::where('id', '=', $jobId)->get())
         ]);
 
     }

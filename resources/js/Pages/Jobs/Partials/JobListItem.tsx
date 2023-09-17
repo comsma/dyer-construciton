@@ -36,7 +36,7 @@ export default function JobListItem({job}: Props) {
             </Modal>
             <div className={'grid grid-cols-5'}>
                 <Link href={`/jobs/${job.id}`} className={'col-span-4 grid grid-cols-4 hover:opacity-50'}>
-                    <p className={'col-span-2 whitespace-nowrap px-3 py-4 text-sm text-gray-900'}>{job.name}</p>
+                    <p className={'col-span-2 whitespace-nowrap px-3 py-4 text-sm text-gray-900 overflow-hidden'}>{job.name}</p>
                     <p className={'col-span-1 whitespace-nowrap px-3 py-4 text-sm text-gray-500'}>{job.city}</p>
                     <p className={'col-span-1 whitespace-nowrap px-3 py-4 text-sm text-gray-500'}>{job.state}</p>
                 </Link>
