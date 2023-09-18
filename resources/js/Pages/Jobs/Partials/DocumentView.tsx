@@ -3,27 +3,28 @@ import React, {useState} from "react";
 import Modal from "@/Components/Modal";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 import {JobDocument} from "@/types/jobs";
-import DangerButton from "@/Components/DangerButton";
 import {Simulate} from "react-dom/test-utils";
-import reset = Simulate.reset;
+import InputError from "@/Components/InputError";
 
 type Props = {
     documents: [JobDocument],
-    id: string
+    jobId: number
 }
-export default function DocumentView({documents, id}: Props ){
-    const { data, setData, post, progress, reset }: InertiaFormProps<{ title: string, document: File}> = useForm({
+export default function DocumentView({documents, jobId}: Props ){
+    const { data, setData, post, progress, reset, errors } = useForm<{title: string, document: File | undefined}>({
         title: "",
-        document: null,
+        document: undefined
     })
 
 
     function submit(e: React.FormEvent) {
         e.preventDefault()
-        post(`/jobs/${id}/documents`, {
-            onSuccess: () => reset()
+        post(route('job.document.create', {'job': jobId}), {
+            onSuccess: () => {
+                reset()
+                setIsDocumentOpen(false)
+            }
         });
     }
 
@@ -43,12 +44,13 @@ export default function DocumentView({documents, id}: Props ){
                                 value={data.title}
                                 onChange={e => setData("title", e.target.value)} />
                         </div>
+                        <InputError message={errors.title} className="mt-2" />
                     </div>
                         <div className="mt-5">
                         {data.document? <>
                             <div className={'flex flex-row items-center'}>
                                 <p className={'whitespace-nowrap px-3 py-4 text-sm text-gray-500'}>{data.document.name}</p>
-                                <button className={'bg-red-600 text-white p-2 rounded-lg aspect-square hover:bg-red-500'} onClick={() => setData("document", null)}>
+                                <button className={'bg-red-600 text-white p-2 rounded-lg aspect-square hover:bg-red-500'} onClick={() => setData("document", undefined)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
@@ -70,7 +72,8 @@ export default function DocumentView({documents, id}: Props ){
                                                 id="file-upload"
                                                 name="file-upload"
                                                 type="file"
-                                                onChange={e => setData("document", e.target.files[0])}
+                                                onChange={e => {if(e.target.files && e.target.files[0]){setData("document", (e.target.files[0]))}}}
+
                                                 className="sr-only" />
                                         </label>
                                         <p className="pl-1">or drag and drop</p>
@@ -79,6 +82,7 @@ export default function DocumentView({documents, id}: Props ){
                                 </div>
                             </div>
                         </>}
+                            <InputError message={errors.document} className="mt-2" />
 
 
                     </div>
@@ -127,12 +131,12 @@ export default function DocumentView({documents, id}: Props ){
                                             </div>
                                         </div>
                                         <div className="ml-4 flex-shrink-0">
-                                            <a href={`/jobs/${id}/documents/${document.id}`} target={'_blank'} className="font-medium text-slate-600 hover:text-slate-500">
+                                            <a href={route('job.document.view', {'document': document.id, 'job': jobId})} target={'_blank'} className="font-medium text-slate-600 hover:text-slate-500">
                                                 Download
                                             </a>
                                         </div>
                                         <div className="ml-4 flex-shrink-0">
-                                            <button onClick={() => router.delete(route('job.documents.delete', {'jobId': id, 'documentId': document.id}))} className="font-medium text-red-600 hover:text-red-500">
+                                            <button onClick={() => router.delete(route('job.documents.delete', {'job': jobId, 'documentId': document.id}))} className="font-medium text-red-600 hover:text-red-500">
                                                 Remove
                                             </button>
                                         </div>

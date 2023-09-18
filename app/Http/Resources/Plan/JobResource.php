@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Plan;
 
-use App\Http\Resources\Admin\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
 
 class JobResource extends JsonResource
 {
@@ -21,7 +19,7 @@ class JobResource extends JsonResource
             'name' => $this->name,
             'city' => $this->city,
             'state' => $this->state,
-
+            'documents' => DocumentResource::collection($this->documents)
         ];
     }
 }

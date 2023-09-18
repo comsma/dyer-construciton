@@ -11,6 +11,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        app()->usePublicPath(realpath(base_path().'/public_html'));
 
     }
 

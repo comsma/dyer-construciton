@@ -4,33 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DocumentCreateRequest;
 use App\Models\Document;
+use App\Models\Job;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DocumentsController extends Controller
 {
-    public function listDocuments(): void
-    {
-        $documents = Document::all();
-
-        foreach ($documents as $document) {
-            echo $document->id . ' ' . $document->name . '<br>';
-        }
-    }
-
     /**
      * Stream the document to an authenticated user
      *
      * @throws Exception
      */
-    public function view(string $job_id, string $document_id): BinaryFileResponse
+    public function view(Request $request, string $job, Document $document): BinaryFileResponse
     {
+        if ($request->user()->cannot('view', $document)) {
+            abort(403);
+        }
 
-        $document = Document::where(['job_id' => $job_id, 'id' =>  $document_id])->limit(1)->get();
-
-        $name = $document[0]->name;
+        $name = $document->name;
 
         if (!Storage::exists($name)) {
             throw new Exception('Document not found');
@@ -41,26 +35,28 @@ class DocumentsController extends Controller
         $mime = Storage::mimeType($name);
         return response()->file($path, [
             'Content-Type'        => $mime,
-            'Content-Disposition' => 'inline; filename="'.$document[0]->title.'"',
+            'Content-Disposition' => 'inline; filename="'.$document->title.'"',
         ]);
     }
 
 
-    public function create(DocumentCreateRequest $request, string $jobId): RedirectResponse
+    public function create(DocumentCreateRequest $request, Job $job): RedirectResponse
     {
-        error_log($jobId);
-        if (!Storage::directoryExists('job_documents/'.$jobId)) {
-            Storage::createDirectory('job_documents/'.$jobId);
+        error_log($job);
+
+
+        if (!Storage::directoryExists('job_documents/'.$job->id)) {
+            Storage::createDirectory('job_documents/'.$job->id);
         }
 
-        $path = Storage::putFile('job_documents/'.$jobId, $request->file('document'));
+        $path = Storage::putFile('job_documents/'.$job->id, $request->file('document'));
 
         Document::create([
             'name' => $path,
             'title' => $request->title,
-            'job_id' => $jobId]);
+            'job_id' => $job->id]);
 
-        return to_route('jobs.get', ['jobId'=>$jobId]);
+        return to_route('jobs.get', ['job'=>$job->id]);
 
     }
 
@@ -81,6 +77,6 @@ class DocumentsController extends Controller
 
         Document::destroy($document[0]->id);
 
-        return to_route('jobs.get', ['jobId'=>$jobId]);
+        return to_route('jobs.get', ['job'=>$jobId]);
     }
 }

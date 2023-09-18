@@ -25,7 +25,7 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company' => ['string', 'max:255'],
+            'company' => ['string', 'max:255', 'nullable'],
             'username' => ['string', 'max:255', Rule::unique(User::class)],
             'password' => ['string', Password::defaults(), 'confirmed'],
             'has_view_documents' => ['boolean'],

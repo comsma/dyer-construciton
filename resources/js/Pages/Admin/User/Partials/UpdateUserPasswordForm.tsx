@@ -1,12 +1,11 @@
 import {useForm} from "@inertiajs/react";
-import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import React, {useRef} from "react";
 import InputError from "@/Components/InputError";
 
 export default function UpdateUserPasswordForm() {
-    const { data, setData, post, reset, errors }: InertiaFormProps<{password: string, password_conformation: string}> = useForm({
+    const { data, setData, post, reset, errors } = useForm({
         password: '',
         password_confirmation: '',
     })

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\CreateUserRequest;
 use App\Http\Requests\Admin\UpdateUserRequest;
+use App\Http\Resources\Admin\UserListResource;
 use App\Http\Resources\Admin\UserResource;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -15,19 +16,27 @@ use function Termwind\render;
 
 class AdminController extends Controller
 {
-    function getUsers(): Response {
+    function getUsers(Request $request): Response {
+        if($request->user()->cannot('admin')) {
+            abort(403);
+        }
         return Inertia::render('Admin/Index', [
-            'users' => UserResource::collection(User::all())
+            'users' => UserListResource::collection(User::all())
         ]);
     }
     function createUser(CreateUserRequest $request): RedirectResponse {
-
+        if($request->user()->cannot('admin')) {
+            abort(403);
+        }
         User::create($request->validated());
 
         return to_route('admin.users');
     }
 
-    function editUser(string $userId): Response {
+    function editUser(Request $request, string $userId): Response {
+        if($request->user()->cannot('admin')) {
+            abort(403);
+        }
         return Inertia::render('Admin/User/User', [
             'users' => UserResource::collection(User::where(['id' => $userId])->get())
         ]);
@@ -35,6 +44,9 @@ class AdminController extends Controller
 
     function updateUser(UpdateUserRequest $request, string $userId): RedirectResponse
     {
+        if($request->user()->cannot('admin')) {
+            abort(403);
+        }
         $user = User::findOrFail($userId);
 
         if($request->validated()){
@@ -54,6 +66,9 @@ class AdminController extends Controller
 
     function updateUserPassword(Request $request, int $userId): RedirectResponse
     {
+        if($request->user()->cannot('admin')) {
+            abort(403);
+        }
         $validated = $request->validate([
             'password' => ['required', Password::defaults(), 'confirmed']
         ]);
@@ -66,8 +81,11 @@ class AdminController extends Controller
         return redirect('/admin/user/'.$userId);
     }
 
-    function destroyUser(int $userId): RedirectResponse
+    function destroyUser(Request $request, int $userId): RedirectResponse
     {
+        if($request->user()->cannot('admin')) {
+            abort(403);
+        }
         User::destroy($userId);
 
         return to_route('admin.users');

@@ -2,10 +2,11 @@
 interface Props {
     className: string;
 }
-export default function ApplicationLogo({className}: Props) {
+export default function ApplicationLogo() {
     return (
-        <div className={className}>
-            <img src={'/images/DC-Logo.png'}  alt={'Dyer Construction'}  className={'max-h-full max-w-full object-cover'}  />
+        <div className={'h-full w-80 grid'}>
+            <img src={'/images/DC-Logo.png'}  alt={'Dyer Construction'}  className={'w-full object-contain min-h-0 h-full'}  />
         </div>
+
     );
 }

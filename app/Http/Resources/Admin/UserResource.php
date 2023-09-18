@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Http\Resources\JobResource;
+use App\Http\Resources\Job\JobResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

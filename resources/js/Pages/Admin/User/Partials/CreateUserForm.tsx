@@ -1,24 +1,13 @@
-import {useForm} from "@inertiajs/react";
-import {InertiaFormProps} from "@inertiajs/react/types/useForm";
-import {f} from "../../../../../../public/build/assets/transition-333b5626";
+
 import React from "react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
 import PrimaryButton from "@/Components/PrimaryButton";
 import {Switch} from "@headlessui/react";
+import {useForm} from "@inertiajs/react";
 
 export default function CreateUserForm() {
-    const {data, setData, post, errors}: InertiaFormProps<{
-        username: string,
-        company: string,
-        password: string,
-        password_conformation: string,
-        has_view_documents: boolean,
-        has_modify_documents: boolean,
-        has_modify_gallery: boolean,
-        has_admin: boolean,
-
-    }> = useForm({
+    const {data, setData, post, errors} = useForm({
         username: '',
         company: '',
         password: '',

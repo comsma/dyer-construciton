@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company' => ['string', 'max:255'],
+            'company' => ['string', 'max:255', 'nullable'],
             'username' => ['string', 'max:255', Rule::unique(User::class)->ignore($this->route('userId'))],
             'hasViewDocuments' => ['boolean'],
             'hasModifyDocuments' => ['boolean'],

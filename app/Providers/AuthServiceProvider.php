@@ -3,7 +3,13 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\Document;
+use App\Models\Job;
+use App\Models\User;
+use App\Policies\DocumentPolicy;
+use App\Policies\JobPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-
+        Document::class => DocumentPolicy::class,
     ];
 
     /**
@@ -21,6 +27,26 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerPolicies();
+
+        Gate::before(function (User $user) {
+            if ($user->has_admin) {
+                return true;
+            }
+            return null;
+        });
+
+        Gate::define('view-documents', function (User $user):bool{
+            return $user->has_view_documents;
+        });
+
+        Gate::define('modify-documents', function (User $user):bool{
+            return $user->has_modify_documents;
+        });
+
+        Gate::define('admin', function (User $user):bool{
+            return $user->has_admin;
+        });
 
     }
 }

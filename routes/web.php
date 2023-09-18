@@ -32,14 +32,18 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('/jobs', [\App\Http\Controllers\JobController::class, 'listJobs'])->name('jobs.list');
     Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'create'])->name('jobs.create');
 
-    Route::get('/jobs/{jobId}', [\App\Http\Controllers\JobController::class, 'getJob'])->name('jobs.get');
-    Route::patch('jobs/{id}')->name('jobs.edit');
+    Route::get('/jobs/{job}', [\App\Http\Controllers\JobController::class, 'getJob'])->name('jobs.get');
+    Route::patch('/jobs/{jobId}', [\App\Http\Controllers\JobController::class, 'updateJob'])->name('job.edit');
     Route::delete('/jobs/{id}', [\App\Http\Controllers\JobController::class, 'destroy'])->name('jobs.delete');
 
-    Route::post('/jobs/{jobId}/documents', [\App\Http\Controllers\DocumentsController::class, 'create']);
 
-    Route::get('/jobs/{job_id}/documents/{document_id}', [\App\Http\Controllers\DocumentsController::class, 'view']);
-    Route::delete('/jobs/{jobId}/documents/{documentId}', [\App\Http\Controllers\DocumentsController::class, 'destroy'])->name('job.documents.delete');
+    Route::post('/jobs/{job}/user/{user}', [\App\Http\Controllers\JobController::class, 'addUserOnJob'])->name('jobs.user.add');
+    Route::post('/jobs/{job}/user', [\App\Http\Controllers\JobController::class, 'createUserOnJob'])->name('jobs.user.create');
+    Route::delete('/jobs/{job}/user/{user}', [\App\Http\Controllers\JobController::class, 'detachUserOnJob'])->name('jobs.user.detach');
+
+    Route::post('/jobs/{job}/documents', [\App\Http\Controllers\DocumentsController::class, 'create'])->name('job.document.create');
+    Route::get('/jobs/{job}/documents/{document}', [\App\Http\Controllers\DocumentsController::class, 'view'])->name('job.document.view');
+    Route::delete('/jobs/{job}/documents/{documentId}', [\App\Http\Controllers\DocumentsController::class, 'destroy'])->name('job.documents.delete');
 
     Route::get('/admin/users', [\App\Http\Controllers\AdminController::class, 'getUsers'])->name('admin.users');
 

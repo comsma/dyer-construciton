@@ -4,31 +4,16 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function CreateJobForm() {
-
-    const [values, setValues] = useState({
+    const {data, setData, post, errors}= useForm({
         name: "",
         city: "",
         state: ""
     })
 
 
-    function handleChange(e: React.FormEvent<HTMLInputElement>) {
-        const key = e.currentTarget.id;
-        const value = e.currentTarget.value
-        setValues(values => ({
-            ...values,
-            [key]: value,
-        }))
-    }
-
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        router.post('/jobs', values)
-        setValues({
-            name: "",
-            city: "",
-            state: ""})
-        onSubmit();
+        post(route('jobs.create'),{})
     }
 
     return (
@@ -40,8 +25,8 @@ export default function CreateJobForm() {
                         type="text"
                         id="name"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
-                        value={values.name}
-                        onChange={handleChange} />
+                        value={data.name}
+                        onChange={(e) => setData('name', e.target.value)} />
                 </div>
             </div>
             <div className={'mt-5'}>
@@ -51,8 +36,8 @@ export default function CreateJobForm() {
                         type="text"
                         id="city"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
-                        value={values.city}
-                        onChange={handleChange} />
+                        value={data.city}
+                        onChange={(e) => setData('city', e.target.value)} />
                 </div>
             </div>
             <div className={'mt-5'}>
@@ -62,8 +47,8 @@ export default function CreateJobForm() {
                         type="text"
                         id="state"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
-                        value={values.state}
-                        onChange={handleChange} />
+                        value={data.state}
+                        onChange={(e) => setData('name', e.target.value)} />
                 </div>
             </div>
 

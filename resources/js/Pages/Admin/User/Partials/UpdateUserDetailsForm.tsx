@@ -1,4 +1,4 @@
-import {InertiaFormProps} from "@inertiajs/react/types/useForm";
+
 import {useForm} from "@inertiajs/react";
 import React from "react";
 import InputLabel from "@/Components/InputLabel";
@@ -11,7 +11,7 @@ function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }
 export function UpdateUserDetailsForm({user}: {user: UserType}) {
-    const { data, setData, patch, reset, errors }: InertiaFormProps<{username: string, company: string, hasViewDocuments: boolean}> = useForm({
+    const { data, setData, patch, reset, errors } = useForm({
         username: user.username,
         company: user.company,
         hasViewDocuments: user.hasViewDocuments,
