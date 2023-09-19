@@ -15,8 +15,8 @@ class DocumentCreateRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'document' => 'required'
-            //
+            'document' => 'required',
+
         ];
     }
 }

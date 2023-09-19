@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'hasModifyDocuments' => $this->has_modify_documents,
             'hasModifyGallery' => $this->has_modify_gallery,
             'hasAdmin' => $this->has_admin,
-            'jobs' => JobResource::collection($this->jobs)
+            'jobs' => JobResource::collection($this->jobs),
         ];
     }
 }

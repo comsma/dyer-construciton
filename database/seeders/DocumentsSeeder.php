@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Document;
 use App\Models\Job;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DocumentsSeeder extends Seeder

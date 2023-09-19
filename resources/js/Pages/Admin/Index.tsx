@@ -22,7 +22,7 @@ export default function Index({auth, users}: PageProps<props>) {
                 header={<h2 className="font-semibold text-xl text-gray-200 leading-tight">Admin Dashboard</h2>}
             >
                 <Modal show={isCreateUserOpen} onClose={() => setCreateUserOpen(false)}>
-                    <div className={'p-5 m-5'}><CreateUserForm /></div>
+                    <div className={'p-5 m-5'}><CreateUserForm onFormSuccess={() => setCreateUserOpen(false)}/></div>
                 </Modal>
 
                 <Head title="Admin Dashboard"/>

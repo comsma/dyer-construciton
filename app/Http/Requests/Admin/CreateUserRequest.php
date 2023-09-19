@@ -31,8 +31,8 @@ class CreateUserRequest extends FormRequest
             'has_view_documents' => ['boolean'],
             'has_modify_documents' => ['boolean'],
             'has_modify_gallery' => ['boolean'],
-            'has_admin' => ['boolean']
-            //
+            'has_admin' => ['boolean'],
+
         ];
     }
 }

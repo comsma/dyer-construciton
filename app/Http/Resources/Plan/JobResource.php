@@ -19,7 +19,7 @@ class JobResource extends JsonResource
             'name' => $this->name,
             'city' => $this->city,
             'state' => $this->state,
-            'documents' => DocumentResource::collection($this->documents)
+            'documents' => DocumentResource::collection($this->documents),
         ];
     }
 }

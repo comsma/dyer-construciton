@@ -3,7 +3,7 @@ import {router, useForm} from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function CreateJobForm() {
+export default function CreateJobForm({onFormSuccess}:{onFormSuccess: () => void }) {
     const {data, setData, post, errors}= useForm({
         name: "",
         city: "",
@@ -13,7 +13,9 @@ export default function CreateJobForm() {
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        post(route('jobs.create'),{})
+        post(route('jobs.create'),{
+            onSuccess: onFormSuccess
+        })
     }
 
     return (
@@ -48,7 +50,7 @@ export default function CreateJobForm() {
                         id="state"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
                         value={data.state}
-                        onChange={(e) => setData('name', e.target.value)} />
+                        onChange={(e) => setData('state', e.target.value)} />
                 </div>
             </div>
 

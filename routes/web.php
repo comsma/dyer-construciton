@@ -3,7 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +35,6 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::patch('/jobs/{jobId}', [\App\Http\Controllers\JobController::class, 'updateJob'])->name('job.edit');
     Route::delete('/jobs/{id}', [\App\Http\Controllers\JobController::class, 'destroy'])->name('jobs.delete');
 
-
     Route::post('/jobs/{job}/user/{user}', [\App\Http\Controllers\JobController::class, 'addUserOnJob'])->name('jobs.user.add');
     Route::post('/jobs/{job}/user', [\App\Http\Controllers\JobController::class, 'createUserOnJob'])->name('jobs.user.create');
     Route::delete('/jobs/{job}/user/{user}', [\App\Http\Controllers\JobController::class, 'detachUserOnJob'])->name('jobs.user.detach');
@@ -56,10 +54,6 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
 
     Route::get('/plans', [\App\Http\Controllers\PlanController::class, 'getPlans'])->name('plan.list');
 
-
 });
-
-
-
 
 require __DIR__ . '/auth.php';

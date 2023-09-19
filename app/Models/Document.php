@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Document extends Model
@@ -19,7 +18,7 @@ class Document extends Model
     protected $fillable = [
         'name',
         'title',
-        'job_id'
+        'job_id',
     ];
 
     public function job(): HasOne

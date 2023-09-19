@@ -24,7 +24,7 @@ class JobCreateRequest extends FormRequest
         return [
             'name' => ['string'],
             'city' => ['string', 'max:255'],
-            'state' => ['string', 'max:255']
+            'state' => ['string', 'max:255'],
         ];
     }
 }

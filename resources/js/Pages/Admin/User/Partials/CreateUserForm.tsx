@@ -6,7 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import {Switch} from "@headlessui/react";
 import {useForm} from "@inertiajs/react";
 
-export default function CreateUserForm() {
+export default function CreateUserForm({onFormSuccess}:{onFormSuccess: () => void}) {
     const {data, setData, post, errors} = useForm({
         username: '',
         company: '',
@@ -22,8 +22,7 @@ export default function CreateUserForm() {
         e.preventDefault()
 
         post(route('admin.user.create'), {
-            onError: (errors: any) => {
-            }
+            onSuccess: onFormSuccess
         })
     }
 

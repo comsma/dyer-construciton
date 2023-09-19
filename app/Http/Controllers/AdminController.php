@@ -12,20 +12,23 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Inertia\Response;
-use function Termwind\render;
 
 class AdminController extends Controller
 {
-    function getUsers(Request $request): Response {
-        if($request->user()->cannot('admin')) {
+    public function getUsers(Request $request): Response
+    {
+        if ($request->user()->cannot('admin')) {
             abort(403);
         }
+
         return Inertia::render('Admin/Index', [
-            'users' => UserListResource::collection(User::all())
+            'users' => UserListResource::collection(User::all()),
         ]);
     }
-    function createUser(CreateUserRequest $request): RedirectResponse {
-        if($request->user()->cannot('admin')) {
+
+    public function createUser(CreateUserRequest $request): RedirectResponse
+    {
+        if ($request->user()->cannot('admin')) {
             abort(403);
         }
         User::create($request->validated());
@@ -33,23 +36,25 @@ class AdminController extends Controller
         return to_route('admin.users');
     }
 
-    function editUser(Request $request, string $userId): Response {
-        if($request->user()->cannot('admin')) {
+    public function editUser(Request $request, string $userId): Response
+    {
+        if ($request->user()->cannot('admin')) {
             abort(403);
         }
+
         return Inertia::render('Admin/User/User', [
-            'users' => UserResource::collection(User::where(['id' => $userId])->get())
+            'users' => UserResource::collection(User::where(['id' => $userId])->get()),
         ]);
     }
 
-    function updateUser(UpdateUserRequest $request, string $userId): RedirectResponse
+    public function updateUser(UpdateUserRequest $request, string $userId): RedirectResponse
     {
-        if($request->user()->cannot('admin')) {
+        if ($request->user()->cannot('admin')) {
             abort(403);
         }
         $user = User::findOrFail($userId);
 
-        if($request->validated()){
+        if ($request->validated()) {
             $user->username = $request->username;
             $user->company  = $request->company;
             $user->has_view_documents = $request->hasViewDocuments;
@@ -59,18 +64,16 @@ class AdminController extends Controller
             $user->save();
         }
 
-
-
-        return to_route('admin.user.get', ['userId'=>$userId]);
+        return to_route('admin.user.get', ['userId' => $userId]);
     }
 
-    function updateUserPassword(Request $request, int $userId): RedirectResponse
+    public function updateUserPassword(Request $request, int $userId): RedirectResponse
     {
-        if($request->user()->cannot('admin')) {
+        if ($request->user()->cannot('admin')) {
             abort(403);
         }
         $validated = $request->validate([
-            'password' => ['required', Password::defaults(), 'confirmed']
+            'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
         $user = User::findOrFail($userId);
@@ -78,17 +81,17 @@ class AdminController extends Controller
         $user->password = $validated['password'];
         $user->save();
 
-        return redirect('/admin/user/'.$userId);
+        return redirect('/admin/user/' . $userId);
     }
 
-    function destroyUser(Request $request, int $userId): RedirectResponse
+    public function destroyUser(Request $request, int $userId): RedirectResponse
     {
-        if($request->user()->cannot('admin')) {
+        if ($request->user()->cannot('admin')) {
             abort(403);
         }
         User::destroy($userId);
 
         return to_route('admin.users');
     }
-    //
+
 }

@@ -15,7 +15,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'jobs' => JobResource::collection($this->jobs)
+            'jobs' => JobResource::collection($this->jobs),
         ];
     }
 }

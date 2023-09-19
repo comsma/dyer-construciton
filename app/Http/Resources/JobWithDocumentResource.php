@@ -16,12 +16,12 @@ class JobWithDocumentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-          'id' =>$this->id,
-          'name' =>$this->name,
-          'city' =>$this->city,
-          'state' => $this->state,
-          'documents'=> DocumentResource::collection($this->documents),
-            'users' => UserResource::collection($this->users)
+            'id' => $this->id,
+            'name' => $this->name,
+            'city' => $this->city,
+            'state' => $this->state,
+            'documents' => DocumentResource::collection($this->documents),
+            'users' => UserResource::collection($this->users),
         ];
     }
 }

@@ -21,7 +21,7 @@ export default function Index({auth}: PageProps) {
 
             <Modal show={isCreateJobOpen} onClose={() => (setCreateJobOpen(false))}>
                 <div className={'p-5 m-5'}>
-                    <CreateJobForm />
+                    <CreateJobForm onFormSuccess={() => setCreateJobOpen(false)} />
                 </div>
             </Modal>
 

@@ -30,38 +30,42 @@ class DocumentsController extends Controller
             throw new Exception('Document not found');
         }
 
-
         $path = Storage::path($name);
         $mime = Storage::mimeType($name);
+
         return response()->file($path, [
             'Content-Type'        => $mime,
-            'Content-Disposition' => 'inline; filename="'.$document->title.'"',
+            'Content-Disposition' => 'inline; filename="' . $document->title . '"',
         ]);
     }
 
-
+    /**
+     * Upload a new document associated to a job
+     *
+     * @throws Exception
+     */
     public function create(DocumentCreateRequest $request, Job $job): RedirectResponse
     {
         error_log($job);
 
-
-        if (!Storage::directoryExists('job_documents/'.$job->id)) {
-            Storage::createDirectory('job_documents/'.$job->id);
+        if (!Storage::directoryExists('job_documents/' . $job->id)) {
+            Storage::createDirectory('job_documents/' . $job->id);
         }
 
-        $path = Storage::putFile('job_documents/'.$job->id, $request->file('document'));
+        $path = Storage::putFile('job_documents/' . $job->id, $request->file('document'));
 
         Document::create([
             'name' => $path,
             'title' => $request->title,
             'job_id' => $job->id]);
 
-        return to_route('jobs.get', ['job'=>$job->id]);
+        return to_route('jobs.get', ['job' => $job->id]);
 
     }
 
     /**
-     * Remove the document form the job
+     * Destroy the document from the job
+     *
      * @throws Exception
      */
     public function destroy(string $jobId, string $documentId): RedirectResponse
@@ -77,6 +81,6 @@ class DocumentsController extends Controller
 
         Document::destroy($document[0]->id);
 
-        return to_route('jobs.get', ['job'=>$jobId]);
+        return to_route('jobs.get', ['job' => $jobId]);
     }
 }

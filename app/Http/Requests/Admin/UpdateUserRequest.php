@@ -29,8 +29,8 @@ class UpdateUserRequest extends FormRequest
             'hasViewDocuments' => ['boolean'],
             'hasModifyDocuments' => ['boolean'],
             'hasModifyGallery' => ['boolean'],
-            'hasAdmin' => ['boolean']
-            //
+            'hasAdmin' => ['boolean'],
+
         ];
     }
 }

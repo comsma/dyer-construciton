@@ -6,7 +6,6 @@ use App\Http\Resources\DocumentResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-
 class JobResource extends JsonResource
 {
     /**
@@ -21,8 +20,8 @@ class JobResource extends JsonResource
             'name' => $this->name,
             'city' => $this->city,
             'state' => $this->state,
-            'documents'=> DocumentResource::collection($this->documents),
-            'users' => UserResource::collection($this->users)
+            'documents' => DocumentResource::collection($this->documents),
+            'users' => UserResource::collection($this->users),
 
         ];
     }
